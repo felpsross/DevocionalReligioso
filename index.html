@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Um chamado especial de Nossa Senhora para o seu coração." />
+  <title>Um chamado de Nossa Senhora • Devocional</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;700&family=Great+Vibes&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Partículas douradas de fundo -->
+  <div class="sparkles" aria-hidden="true"></div>
+
+  <!-- Anjinhos decorativos nos cantos -->
+  <svg class="cherub cherub-tl" viewBox="0 0 120 120" aria-hidden="true">
+    <use href="#cherub-svg"/>
+  </svg>
+  <svg class="cherub cherub-tr" viewBox="0 0 120 120" aria-hidden="true">
+    <use href="#cherub-svg"/>
+  </svg>
+  <svg class="cherub cherub-bl" viewBox="0 0 120 120" aria-hidden="true">
+    <use href="#cherub-svg"/>
+  </svg>
+  <svg class="cherub cherub-br" viewBox="0 0 120 120" aria-hidden="true">
+    <use href="#cherub-svg"/>
+  </svg>
+
+  <!-- Botão mute -->
+  <button class="sound-toggle" id="soundToggle" aria-label="Alternar som">
+    <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.05A4.5 4.5 0 0 0 16.5 12z"/></svg>
+  </button>
+
+  <main class="stage" id="stage">
+
+    <!-- Barra de progresso -->
+    <div class="progress-wrap" id="progressWrap" hidden>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressText">1 / 12</div>
+    </div>
+
+    <!-- TELA DE ABERTURA -->
+    <section class="card screen active" data-screen="intro">
+      <div class="frame">
+        <div class="virgin-wrap">
+          <div class="virgin-aura"></div>
+          <img class="virgin" src="assets/nossa-senhora.png" alt="Nossa Senhora" />
+        </div>
+
+        <h1 class="display">Um chamado de Nossa Senhora</h1>
+        <p class="lead">
+          Isso não é por acaso.<br/>
+          Se você chegou até aqui, é porque <em>Ela</em> te chamou.
+        </p>
+        <p class="body">
+          Nossa Senhora preparou este momento especialmente para você.<br/>
+          Mas agora… você terá coragem de dizer <strong>SIM</strong> ao chamado dela?
+        </p>
+        <button class="btn btn-primary" data-action="next">Sim, aceito o chamado <span class="emoji">🙏</span></button>
+        <p class="cite">"Eis aqui a serva do Senhor; faça-se em mim segundo a tua palavra." <span class="ref">— Lc 1,38</span></p>
+      </div>
+    </section>
+
+    <!-- PERGUNTA 1 -->
+    <section class="card screen" data-screen="q1">
+      <div class="frame">
+        <img class="virgin-mini" src="assets/nossa-senhora.png" alt="Nossa Senhora" />
+        <h2 class="title">Antes de começarmos esta jornada sagrada…</h2>
+        <p class="lead">como Nossa Senhora pode te chamar pelo nome?</p>
+        <input type="text" class="text-input" id="nameInput" placeholder="Seu nome" autocomplete="given-name" maxlength="40" />
+        <button class="btn btn-primary" data-action="submit-name">Continuar <span class="emoji">🌹</span></button>
+      </div>
+    </section>
+
+    <!-- PERGUNTA 2 -->
+    <section class="card screen" data-screen="q2">
+      <div class="frame">
+        <img class="virgin-mini" src="assets/nossa-senhora.png" alt="Nossa Senhora" />
+        <h2 class="title"><span class="lead-name"></span>, como está seu coração espiritual neste exato momento?</h2>
+        <div class="options" data-key="estado">
+          <button class="option" data-value="vazio"><span class="opt-emoji">😔</span><span>Sinto um vazio que não sei explicar</span></button>
+          <button class="option" data-value="paz"><span class="opt-emoji">😌</span><span>Está em paz, mas busco mais</span></button>
+          <button class="option" data-value="ferido"><span class="opt-emoji">😢</span><span>Está ferido e preciso de cura</span></button>
+          <button class="option" data-value="chamas"><span class="opt-emoji">🔥</span><span>Está em chamas pela fé, quero crescer mais</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERGUNTA 3 -->
+    <section class="card screen" data-screen="q3">
+      <div class="frame">
+        <img class="virgin-mini" src="assets/nossa-senhora.png" alt="Nossa Senhora" />
+        <h2 class="title">Com que frequência você consegue dedicar um tempo para conversar com Deus?</h2>
+        <div class="options" data-key="oracao">
+          <button class="option" data-value="diario"><span>Todos os dias</span></button>
+          <button class="option" data-value="semanal"><span>Algumas vezes por semana</span></button>
+          <button class="option" data-value="raro"><span>Raramente, mas gostaria de mais</span></button>
+          <button class="option" data-value="quase-nunca"><span>Quase nunca, e isso me incomoda</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERGUNTA 4 - ÁUDIO -->
+    <section class="card screen" data-screen="q4">
+      <div class="frame">
+        <h2 class="title"><span class="lead-name"></span>, antes de continuar…</h2>
+        <p class="lead">Nossa Senhora quer rezar com você agora.</p>
+        <p class="body">Aperte play, feche os olhos e permita-se sentir o abraço dela neste momento.</p>
+
+        <div class="wa-player" id="waPlayer">
+          <div class="wa-avatar"></div>
+          <button class="wa-play" id="waPlay" aria-label="Reproduzir áudio">
+            <svg class="wa-icon-play" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+            <svg class="wa-icon-pause" viewBox="0 0 24 24" width="22" height="22" hidden><path fill="currentColor" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <div class="wa-wave" id="waWave">
+            <!-- preenchido via JS -->
+          </div>
+          <div class="wa-time" id="waTime">0:00</div>
+          <audio id="waAudio" preload="metadata">
+            <source src="assets/oracao-nossa-senhora.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+        <p class="hint">Se o áudio não estiver disponível, você pode prosseguir.</p>
+
+        <button class="btn btn-primary" data-action="next">Senti Sua presença <span class="emoji">💛</span></button>
+      </div>
+    </section>
+
+    <!-- PERGUNTA 5 -->
+    <section class="card screen" data-screen="q5">
+      <div class="frame">
+        <img class="virgin-mini" src="assets/nossa-senhora.png" alt="Nossa Senhora" />
+        <h2 class="title">Qual destas devoções mais toca seu coração?</h2>
+        <div class="options" data-key="devocao">
+          <button class="option" data-value="terco"><span class="opt-emoji">📿</span><span>Terço / Rosário</span></button>
+          <button class="option" data-value="novena"><span class="opt-emoji">🕊️</span><span>Novena</span></button>
+          <button class="option" data-value="consagracao"><span class="opt-emoji">🌹</span><span>Consagração a Nossa Senhora</span></button>
+          <button class="option" data-value="comecando"><span class="opt-emoji">✨</span><span>Ainda não tenho uma, mas quero começar</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERGUNTA 6 -->
+    <section class="card screen" data-screen="q6">
+      <div class="frame">
+        <img class="virgin-mini" src="assets/nossa-senhora.png" alt="Nossa Senhora" />
+        <h2 class="title">Qual a maior dificuldade que você enfrenta na sua vida espiritual hoje?</h2>
+        <div class="options" data-key="dificuldade">
+          <button class="option" data-value="tempo"><span>Falta de tempo e disciplina</span></button>
+          <button class="option" data-value="comecar"><span>Não sei por onde começar</span></button>
+          <button class="option" data-value="distracao"><span>Me distraio facilmente</span></button>
+          <button class="option" data-value="distancia"><span>Sinto que Deus está distante</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERGUNTA 7 - DESEJO -->
+    <section class="card screen" data-screen="q7">
+      <div class="frame">
+        <img class="virgin-mini" src="assets/nossa-senhora.png" alt="Nossa Senhora" />
+        <h2 class="title"><span class="lead-name"></span>, Nossa Senhora intercede por todos os pedidos.</h2>
+        <p class="lead">
+          Neste momento sagrado, qual é o desejo mais profundo do seu coração?
+          Aquele que você guarda em segredo e entrega aos pés dela?
+        </p>
+        <textarea class="text-input text-area" id="wishInput" rows="4" maxlength="280" placeholder="Escreva aqui, com o coração aberto…"></textarea>
+        <p class="trust">Pode confiar. Ela já sabe.</p>
+        <button class="btn btn-primary" data-action="submit-wish">Entregar a Ela <span class="emoji">🌹</span></button>
+      </div>
+    </section>
+
+    <!-- PERGUNTA 8 -->
+    <section class="card screen" data-screen="q8">
+      <div class="frame">
+        <img class="virgin-mini" src="assets/nossa-senhora.png" alt="Nossa Senhora" />
+        <h2 class="title">Em qual momento da sua vida você se encontra agora?</h2>
+        <div class="options" data-key="momento">
+          <button class="option" data-value="tempestade"><span>Atravessando uma tempestade</span></button>
+          <button class="option" data-value="proposito"><span>Em busca de um propósito</span></button>
+          <button class="option" data-value="reconectar"><span>Querendo me reconectar com a fé</span></button>
+          <button class="option" data-value="gratidao"><span>Vivendo uma fase de gratidão e quero retribuir</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERGUNTA 9 -->
+    <section class="card screen" data-screen="q9">
+      <div class="frame">
+        <img class="virgin-mini" src="assets/nossa-senhora.png" alt="Nossa Senhora" />
+        <h2 class="title">Como você gostaria que a fé estivesse presente na sua casa?</h2>
+        <div class="options" data-key="familia">
+          <button class="option" data-value="base"><span>Como base de tudo, todos os dias</span></button>
+          <button class="option" data-value="constante"><span>De forma mais constante do que hoje</span></button>
+          <button class="option" data-value="exemplo"><span>Quero ser exemplo para minha família</span></button>
+          <button class="option" data-value="aprender"><span>Quero aprender para depois ensinar</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERGUNTA 10 -->
+    <section class="card screen" data-screen="q10">
+      <div class="frame">
+        <img class="virgin-mini" src="assets/nossa-senhora.png" alt="Nossa Senhora" />
+        <h2 class="title">Você estaria disposto(a) a dedicar apenas <em>10 minutos por dia</em> para se aproximar de Nossa Senhora e de Jesus?</h2>
+        <div class="options" data-key="compromisso">
+          <button class="option" data-value="coracao"><span>Sim, com todo meu coração</span></button>
+          <button class="option" data-value="urgente"><span>Sim, preciso disso urgente</span></button>
+          <button class="option" data-value="medo"><span>Quero, mas tenho medo de não conseguir</span></button>
+          <button class="option" data-value="faltando"><span>Sim, é o que estava faltando</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERGUNTA 11 -->
+    <section class="card screen" data-screen="q11">
+      <div class="frame">
+        <img class="virgin-mini" src="assets/nossa-senhora.png" alt="Nossa Senhora" />
+        <h2 class="title">Neste exato momento, respondendo este quiz, o que você sente?</h2>
+        <div class="options" data-key="sentimento">
+          <button class="option" data-value="paz"><span>Uma paz que não sei explicar</span></button>
+          <button class="option" data-value="lagrimas"><span>Vontade de chorar (no bom sentido)</span></button>
+          <button class="option" data-value="esperanca"><span>Esperança renovada</span></button>
+          <button class="option" data-value="sinal"><span>Certeza de que isso é um sinal</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERGUNTA 12 -->
+    <section class="card screen" data-screen="q12">
+      <div class="frame">
+        <div class="virgin-wrap small">
+          <div class="virgin-aura"></div>
+          <img class="virgin" src="assets/nossa-senhora.png" alt="Nossa Senhora" />
+        </div>
+        <h2 class="title"><span class="lead-name"></span>, Ela te trouxe até aqui por um motivo.</h2>
+        <p class="lead">
+          Você está pronto(a) para receber o que Nossa Senhora preparou
+          especialmente para o seu coração e para o seu desejo de
+          <em class="lead-wish"></em>?
+        </p>
+        <div class="options stack" data-key="confirmacao">
+          <button class="option big" data-value="pronto"><span class="opt-emoji">🙏</span><span>Sim, estou pronto(a) para receber</span></button>
+          <button class="option big" data-value="aceito"><span class="opt-emoji">💛</span><span>Aceito esta graça</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA DE TRANSIÇÃO (revelação) -->
+    <section class="card screen reveal-screen" data-screen="reveal">
+      <div class="reveal-light"></div>
+      <div class="frame reveal-frame">
+        <p class="whisper">Ela ouviu você…</p>
+      </div>
+    </section>
+
+    <!-- PÁGINA DE RESULTADO / VENDA -->
+    <section class="card screen result-screen" data-screen="result">
+      <div class="frame">
+        <div class="virgin-wrap result-wrap">
+          <div class="virgin-aura"></div>
+          <img class="virgin result-virgin" src="assets/jesus-maria.png" alt="Jesus e Nossa Senhora" />
+        </div>
+
+        <h1 class="display"><span class="lead-name"></span>, Eles ouviram você e vão te ajudar.</h1>
+
+        <p class="lead">
+          Nossa Senhora preparou um devocional especialmente para almas como a sua,
+          que <span class="lead-state"></span>.
+        </p>
+
+        <div class="divider">✦ ✦ ✦</div>
+
+        <p class="body">
+          Você nos contou que seu maior desejo é <em class="lead-wish-quote"></em>.
+        </p>
+        <p class="body">
+          Saiba que este devocional foi inspirado para conduzir corações como o seu
+          até a realização desta graça através da intercessão dela.
+        </p>
+
+        <div class="devocional-card">
+          <h3 class="devocional-title">O Devocional de Nossa Senhora</h3>
+          <p class="devocional-sub">Um caminho de 30 dias guiado por Ela, até o coração de Jesus.</p>
+          <ul class="devocional-list">
+            <li><span class="check">✦</span> Este devocional contém <strong>30 dias de meditações marianas</strong> para acalmar e curar seu coração</li>
+            <li><span class="check">✦</span> Através destas páginas sagradas, você receberá <strong>orações poderosas de intercessão</strong></li>
+            <li><span class="check">✦</span> Um <strong>terço meditado</strong> dia a dia, conduzido pela Mãe de Deus</li>
+            <li><span class="check">✦</span> Cartas de Nossa Senhora ao seu coração — uma para cada dia</li>
+            <li><span class="check">✦</span> Um espaço sagrado para entregar seus pedidos a Ela</li>
+          </ul>
+        </div>
+
+        <div class="testimonials">
+          <div class="testimonial">
+            <p>"Senti Ela ao meu lado a cada página. Meu pedido foi atendido no 21º dia."</p>
+            <span class="t-name">— Maria C.</span>
+          </div>
+          <div class="testimonial">
+            <p>"Eu não conseguia rezar. Hoje rezo todos os dias. Ela me levou pela mão."</p>
+            <span class="t-name">— Joana R.</span>
+          </div>
+          <div class="testimonial">
+            <p>"Foi como se Nossa Senhora tivesse escrito este devocional só para mim."</p>
+            <span class="t-name">— Beatriz F.</span>
+          </div>
+        </div>
+
+        <a class="btn btn-primary btn-cta" id="ctaButton" href="#">
+          Quero receber meu devocional <span class="emoji">💛</span>
+        </a>
+
+        <p class="urgency">Esta graça está disponível para você <strong>hoje</strong>.</p>
+        <p class="cite">"Tudo o que Ele vos disser, fazei." <span class="ref">— Jo 2,5</span></p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Sino suave (Web Audio API gera tom — sem arquivo externo) -->
+  <!-- SVG sprite do anjinho -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="cherub-svg" viewBox="0 0 120 120">
+        <!-- aura -->
+        <circle cx="60" cy="48" r="22" fill="none" stroke="#D4AF37" stroke-width="0.6" opacity=".4"/>
+        <!-- asas -->
+        <path d="M30 60 C 18 50, 18 70, 32 72 C 40 73, 44 68, 46 64 Z" fill="#E8D5A8" stroke="#C9A961" stroke-width="0.8"/>
+        <path d="M90 60 C 102 50, 102 70, 88 72 C 80 73, 76 68, 74 64 Z" fill="#E8D5A8" stroke="#C9A961" stroke-width="0.8"/>
+        <!-- penas -->
+        <path d="M32 60 q 4 -3 8 0" fill="none" stroke="#C9A961" stroke-width="0.6"/>
+        <path d="M32 64 q 4 -3 8 0" fill="none" stroke="#C9A961" stroke-width="0.6"/>
+        <path d="M88 60 q -4 -3 -8 0" fill="none" stroke="#C9A961" stroke-width="0.6"/>
+        <path d="M88 64 q -4 -3 -8 0" fill="none" stroke="#C9A961" stroke-width="0.6"/>
+        <!-- cabeça -->
+        <circle cx="60" cy="50" r="14" fill="#FAF0DC" stroke="#C9A961" stroke-width="0.8"/>
+        <!-- cabelo -->
+        <path d="M48 46 q 6 -10 24 0 q -6 -4 -12 -3 q -6 -1 -12 3" fill="#D4AF37"/>
+        <!-- olhos -->
+        <circle cx="55" cy="51" r="0.9" fill="#5C4A2A"/>
+        <circle cx="65" cy="51" r="0.9" fill="#5C4A2A"/>
+        <!-- bochechas -->
+        <circle cx="52" cy="55" r="1.5" fill="#F2C8B6" opacity=".7"/>
+        <circle cx="68" cy="55" r="1.5" fill="#F2C8B6" opacity=".7"/>
+        <!-- boca -->
+        <path d="M56 58 q 4 3 8 0" fill="none" stroke="#5C4A2A" stroke-width="0.8" stroke-linecap="round"/>
+        <!-- pescoço/corpo -->
+        <path d="M52 64 q 8 6 16 0 l -3 8 q -5 3 -10 0 z" fill="#FAF0DC" stroke="#C9A961" stroke-width="0.8"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <script src="script.js"></script>
+</body>
+</html>

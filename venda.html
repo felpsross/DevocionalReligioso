@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Um devocional preparado por Nossa Senhora especialmente para o seu coração." />
+  <title>O Devocional de Nossa Senhora · Uma Graça Para Ti</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+SC:wght@400;500&family=Italianno&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ========= VARIÁVEIS ========= */
+    :root {
+      --cream:        #FAF6EC;
+      --cream-deep:   #F2EAD3;
+      --paper:        #FDFBF5;
+      --gold:         #B8923D;
+      --gold-deep:    #8B6F2E;
+      --gold-light:   #D4B66A;
+      --gold-shimmer: #E8D5A8;
+      --gold-glow:    rgba(184,146,61,.4);
+      --ink:          #3D2F1F;
+      --ink-soft:     #5C4A2A;
+    }
+
+    /* ========= RESET ========= */
+    *, *::before, *::after {
+      box-sizing: border-box; margin: 0; padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lora', Georgia, serif;
+      color: var(--ink);
+      background: var(--cream);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Textura de papel envelhecido */
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse at 18% 8%,  rgba(212,182,106,.07), transparent 44%),
+        radial-gradient(ellipse at 82% 92%, rgba(212,182,106,.08), transparent 50%);
+    }
+
+    /* ========= PARTÍCULAS DOURADAS ========= */
+    .particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+    .particle {
+      position: absolute; border-radius: 50%; opacity: 0;
+      background: radial-gradient(circle, #FFE9A8 0%, rgba(212,182,106,.55) 55%, transparent 100%);
+      animation: pFall linear infinite;
+    }
+    @keyframes pFall {
+      0%   { transform: translateY(-18px) translateX(0);    opacity: 0; }
+      8%   { opacity: .85; }
+      92%  { opacity: .55; }
+      100% { transform: translateY(105vh) translateX(14px); opacity: 0; }
+    }
+
+    /* ========= ANJINHOS ========= */
+    .cherub {
+      position: fixed; z-index: 2; pointer-events: none;
+      width: 90px; height: 90px; opacity: .55;
+      filter: drop-shadow(0 4px 8px rgba(92,74,42,.12));
+    }
+    .cherub-tl { top: 12px; left: 12px;  animation: floatC  6s ease-in-out infinite; }
+    .cherub-tr { top: 12px; right: 12px; animation: floatCF 6s ease-in-out infinite; animation-delay: -1.8s; transform: scaleX(-1); }
+    @keyframes floatC  { 0%,100%{ transform: translateY(0); }         50%{ transform: translateY(-8px); } }
+    @keyframes floatCF { 0%,100%{ transform: scaleX(-1) translateY(0); } 50%{ transform: scaleX(-1) translateY(-8px); } }
+
+    /* ========= MAIN ========= */
+    main { position: relative; z-index: 5; }
+
+    /* ========= SCROLL REVEAL ========= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(38px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ========= UTILITÁRIOS COMUNS ========= */
+    .eyebrow {
+      font-family: 'Cormorant SC', serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: .5em; color: var(--gold);
+      margin-bottom: 14px; text-transform: uppercase;
+    }
+    .section-divider {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; margin: 20px auto; max-width: 320px;
+    }
+    .section-divider::before, .section-divider::after {
+      content: ""; flex: 1; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+    }
+    .section-symbol { color: var(--gold); font-size: 14px; letter-spacing: 8px; }
+
+    /* ========= HERO ========= */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 90px 24px 60px;
+      overflow: hidden;
+    }
+    .hero-rays {
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%; max-width: 1000px; height: 520px;
+      pointer-events: none; z-index: 0;
+      background: radial-gradient(ellipse at 50% 0%,
+        rgba(232,213,168,.78) 0%, rgba(184,146,61,.3) 32%, transparent 70%);
+      animation: raysPulse 6s ease-in-out infinite;
+    }
+    @keyframes raysPulse { 0%,100%{ opacity: .45; } 50%{ opacity: .72; } }
+
+    /* Raios em linha SVG simulados via rotação */
+    .hero-rays-lines {
+      position: absolute; top: -40px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 420px;
+      pointer-events: none; z-index: 0; opacity: .18;
+      background: conic-gradient(
+        from 270deg at 50% 0%,
+        transparent 0deg, rgba(212,182,106,.6) 2deg, transparent 4deg,
+        transparent 13deg, rgba(212,182,106,.5) 15deg, transparent 17deg,
+        transparent 26deg, rgba(212,182,106,.4) 28deg, transparent 30deg,
+        transparent 39deg, rgba(212,182,106,.5) 41deg, transparent 43deg,
+        transparent 52deg, rgba(212,182,106,.4) 54deg, transparent 56deg,
+        transparent 65deg, rgba(212,182,106,.5) 67deg, transparent 69deg,
+        transparent 78deg, rgba(212,182,106,.4) 80deg, transparent 82deg,
+        transparent 91deg, rgba(212,182,106,.4) 93deg, transparent 95deg,
+        transparent 104deg, rgba(212,182,106,.5) 106deg, transparent 108deg
+      );
+    }
+
+    .hero-ornament {
+      position: relative; z-index: 2;
+      display: flex; align-items: center; gap: 14px; margin-bottom: 22px;
+      animation: fadeUp 1.2s ease .2s both;
+    }
+    .hero-orn-line {
+      width: 80px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-light));
+    }
+    .hero-orn-line:last-child { background: linear-gradient(to left, transparent, var(--gold-light)); }
+    .hero-orn-sym { color: var(--gold); font-size: 16px; }
+
+    .hero-eyebrow { position: relative; z-index: 2; animation: fadeUp 1.2s ease .2s both; }
+
+    .hero-headline {
+      position: relative; z-index: 2;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      font-size: clamp(52px, 9vw, 80px);
+      line-height: 1.0; color: var(--ink);
+      margin-bottom: 18px;
+      animation: fadeUp 1.4s ease 1.4s both;
+    }
+    .hero-headline .ital { font-family: 'Italianno', cursive; color: var(--gold); font-size: 1.12em; font-weight: 400; }
+
+    .hero-sub {
+      position: relative; z-index: 2;
+      font-family: 'Lora', serif;
+      font-size: clamp(15px, 2.4vw, 18px);
+      line-height: 1.75; color: var(--ink-soft);
+      max-width: 540px; margin: 0 auto 30px;
+      animation: fadeUp 1.4s ease 1.7s both;
+    }
+    .hero-div { position: relative; z-index: 2; animation: fadeIn 1.8s ease 2.0s both; }
+
+    @keyframes fadeUp { from{ opacity:0; transform:translateY(20px); } to{ opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn { from{ opacity:0; } to{ opacity:1; } }
+
+    /* ========= NOSSA SENHORA NO HERO (sem moldura) ========= */
+    .hero-ns-wrap {
+      position: relative; z-index: 2;
+      margin-bottom: 24px;
+      animation: fadeUp 1.6s ease .7s both;
+    }
+    .hero-ns-aura {
+      position: absolute; inset: -60px; border-radius: 50%; pointer-events: none;
+      background: radial-gradient(circle, rgba(232,213,168,.65) 0%, rgba(184,146,61,.22) 42%, transparent 72%);
+      animation: auraPulse 4s ease-in-out infinite;
+    }
+    @keyframes auraPulse { 0%,100%{ transform:scale(1); opacity:.85; } 50%{ transform:scale(1.08); opacity:1; } }
+    .hero-ns-img {
+      position: relative; z-index: 1;
+      width: 260px; height: auto; display: block;
+      filter: drop-shadow(0 18px 40px rgba(184,146,61,.28));
+    }
+
+    /* ========= SEÇÃO MENSAGEM ========= */
+    .message-section {
+      padding: 40px 24px;
+      background: linear-gradient(180deg, var(--cream) 0%, var(--cream-deep) 20%, var(--cream-deep) 80%, var(--cream) 100%);
+    }
+    .message-inner { max-width: 640px; margin: 0 auto; text-align: center; }
+
+    .bible-quote {
+      font-family: 'Italianno', cursive;
+      font-size: clamp(34px, 6vw, 46px);
+      color: var(--gold-deep); line-height: 1.2; font-style: normal;
+    }
+    .bible-ref {
+      display: block; margin-top: 10px;
+      font-family: 'Cormorant SC', serif;
+      font-size: 11px; letter-spacing: .35em; color: var(--gold);
+    }
+    .message-intro {
+      font-family: 'Lora', serif;
+      font-size: clamp(15px, 2.3vw, 17px);
+      line-height: 1.8; color: var(--ink-soft); margin-bottom: 38px;
+    }
+
+    /* Caixa do desejo — cantos estilo papal */
+    .desire-box {
+      position: relative; max-width: 560px;
+      margin: 0 auto 42px; padding: 40px 32px;
+      background: var(--paper);
+      border: 1px solid var(--gold-shimmer); border-radius: 4px;
+      box-shadow: 0 4px 32px rgba(139,111,46,.12);
+    }
+    .desire-box::before, .desire-box::after,
+    .desire-box .c-bl, .desire-box .c-br {
+      position: absolute; width: 24px; height: 24px;
+      border-color: var(--gold); border-style: solid; border-width: 1.5px;
+    }
+    .desire-box::before { content:""; top:-1px; left:-1px;   border-right:none; border-bottom:none; }
+    .desire-box::after  { content:""; top:-1px; right:-1px;  border-left:none;  border-bottom:none; }
+    .desire-box .c-bl   { bottom:-1px; left:-1px;   border-right:none; border-top:none; }
+    .desire-box .c-br   { bottom:-1px; right:-1px;  border-left:none;  border-top:none; }
+    .desire-label {
+      font-family: 'Cormorant SC', serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: .4em; color: var(--gold); margin-bottom: 22px;
+    }
+    .desire-text {
+      font-family: 'Italianno', cursive;
+      font-size: clamp(30px, 5.5vw, 44px);
+      color: var(--ink); line-height: 1.3;
+      word-break: break-word;
+    }
+
+    .message-close {
+      font-family: 'Lora', serif;
+      font-size: clamp(15px, 2.3vw, 17px);
+      line-height: 1.85; color: var(--ink-soft);
+    }
+    .message-close strong { font-style: italic; color: var(--gold-deep); font-weight: 500; }
+
+    /* CTA inline (hero + features) */
+    .hero-cta-wrap {
+      position: relative; z-index: 2;
+      margin: 4px 0 22px;
+      animation: fadeUp 1.4s ease 2.0s both;
+    }
+    .inline-cta-wrap {
+      text-align: center;
+      margin-top: 36px;
+    }
+
+    /* ========= FEATURES ========= */
+    .features-section { padding: 40px 24px; }
+    .features-header { text-align: center; margin-bottom: 32px; }
+    .sec-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      font-size: clamp(28px, 5vw, 44px);
+      line-height: 1.2; color: var(--ink);
+    }
+    .sec-headline .ital { font-family: 'Italianno', cursive; color: var(--gold); font-size: 1.1em; font-weight: 400; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; max-width: 1080px; margin: 0 auto;
+    }
+    .f-card {
+      background: var(--paper);
+      border: 1px solid rgba(184,146,61,.2);
+      border-radius: 16px; padding: 40px 28px;
+      text-align: center;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .f-card:hover { transform: translateY(-6px); box-shadow: 0 18px 42px rgba(139,111,46,.18); }
+    .f-icon { width: 56px; height: 56px; margin: 0 auto 20px; color: var(--gold-deep); }
+    .f-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600; font-size: 22px; color: var(--ink); margin-bottom: 10px;
+    }
+    .f-desc { font-family: 'Lora', serif; font-size: 15px; line-height: 1.65; color: var(--ink-soft); }
+
+    /* ========= DEPOIMENTOS ========= */
+    .testimonials-section {
+      padding: 40px 24px;
+      background: linear-gradient(180deg, var(--cream) 0%, var(--cream-deep) 50%, var(--cream) 100%);
+    }
+    .test-header { text-align: center; margin-bottom: 30px; }
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; max-width: 980px; margin: 0 auto;
+    }
+    .t-card {
+      background: var(--paper);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 14px 14px 0;
+      padding: 32px 24px;
+    }
+    .t-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 18px;
+      line-height: 1.65; color: var(--ink); margin-bottom: 14px;
+    }
+    .t-author {
+      font-family: 'Cormorant SC', serif;
+      font-size: 12px; letter-spacing: .2em; color: var(--gold-deep);
+    }
+
+    /* ========= CTA FINAL ========= */
+    .cta-section { padding: 48px 24px 44px; text-align: center; }
+    .cta-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500; font-size: clamp(32px, 6vw, 52px);
+      line-height: 1.15; color: var(--ink); margin-bottom: 20px;
+    }
+    .cta-headline .ital { font-family: 'Italianno', cursive; color: var(--gold); font-size: 1.1em; }
+    .cta-sub {
+      font-family: 'Lora', serif;
+      font-size: clamp(16px, 2.4vw, 18px);
+      line-height: 1.75; color: var(--ink-soft);
+      max-width: 520px; margin: 0 auto 52px;
+    }
+
+    /* Wrapper com cantos em L */
+    .cta-wrap { position: relative; display: inline-block; margin-bottom: 20px; }
+    .cc {
+      position: absolute;
+      width: 14px; height: 14px;
+      border-color: var(--gold-deep);
+      border-style: solid; border-width: 1.5px;
+    }
+    .cc-tl { top:-6px; left:-6px;   border-right:none; border-bottom:none; }
+    .cc-tr { top:-6px; right:-6px;  border-left:none;  border-bottom:none; }
+    .cc-bl { bottom:-6px; left:-6px;  border-right:none; border-top:none; }
+    .cc-br { bottom:-6px; right:-6px; border-left:none;  border-top:none; }
+
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 14px;
+      padding: 22px 52px;
+      background: linear-gradient(135deg, var(--gold-deep) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+      background-size: 200% 100%;
+      border: none; border-radius: 4px;
+      font-family: 'Cormorant SC', serif;
+      font-size: 16px; font-weight: 500;
+      letter-spacing: .25em; color: #FFF8EE;
+      cursor: pointer; text-decoration: none;
+      box-shadow: 0 4px 22px rgba(139,111,46,.42), inset 0 1px 0 rgba(255,255,255,.3);
+      transition: transform .25s ease, box-shadow .25s ease;
+      position: relative; overflow: hidden;
+    }
+    /* Shimmer que passa */
+    .cta-btn::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.45) 50%, transparent 70%);
+      transform: translateX(-100%);
+      animation: shimmerPass 3s ease-in-out infinite;
+    }
+    @keyframes shimmerPass {
+      0%,55%{ transform:translateX(-100%); }
+      85%   { transform:translateX(100%);  }
+      100%  { transform:translateX(100%);  }
+    }
+    .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 34px rgba(139,111,46,.52), inset 0 1px 0 rgba(255,255,255,.3); }
+    .cta-btn:active { transform: scale(.98); }
+    .cta-arrow { display: inline-block; transition: transform .25s ease; font-style: normal; }
+    .cta-btn:hover .cta-arrow { transform: translateX(6px); }
+
+    .cta-note {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 15px;
+      color: var(--ink-soft); margin-top: 18px;
+    }
+
+    /* ========= FOOTER ========= */
+    footer {
+      padding: 40px 24px;
+      border-top: 1px solid rgba(184,146,61,.15);
+      text-align: center;
+    }
+    .footer-text {
+      font-family: 'Cormorant SC', serif;
+      font-size: 11px; letter-spacing: .35em;
+      color: var(--ink-soft); opacity: .7;
+    }
+
+    /* ========= MOBILE ========= */
+    @media (max-width: 600px) {
+      .hero              { padding: 60px 18px 36px; min-height: auto; }
+      .hero-ns-img       { width: 200px; }
+      .hero-ns-aura      { inset: -40px; }
+      .message-section,
+      .features-section,
+      .testimonials-section { padding: 32px 18px; }
+      .cta-section       { padding: 36px 18px 32px; }
+      .desire-box        { padding: 24px 16px; }
+      .cta-btn           { width: 100%; max-width: 360px; justify-content: center; padding: 18px 24px; font-size: 14px; }
+      .cherub            { width: 60px; height: 60px; opacity: .4; }
+      .f-card            { padding: 28px 18px; }
+      .section-divider   { margin: 22px auto; }
+    }
+
+    /* ========= NOTIFICAÇÃO SOCIAL PROOF ========= */
+    .toast {
+      position: fixed;
+      bottom: 24px; left: 20px;
+      z-index: 999;
+      max-width: 290px; width: calc(100vw - 40px);
+      background: var(--paper);
+      border: 1px solid var(--gold-shimmer);
+      border-left: 3px solid var(--gold);
+      border-radius: 12px;
+      padding: 13px 15px;
+      box-shadow: 0 8px 28px rgba(61,47,31,.16);
+      display: flex; align-items: center; gap: 11px;
+      transform: translateX(-115%);
+      opacity: 0;
+      transition: transform .5s cubic-bezier(.25,.8,.25,1), opacity .5s ease;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(0); opacity: 1; }
+    .toast-icon {
+      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--gold-shimmer), var(--gold-light));
+      border: 1.5px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 19px;
+    }
+    .toast-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600; font-size: 14px; color: var(--ink);
+    }
+    .toast-msg {
+      font-family: 'Lora', serif;
+      font-size: 12px; color: var(--ink-soft);
+      line-height: 1.45; margin-top: 2px;
+    }
+    .toast-time {
+      font-family: 'Cormorant SC', serif;
+      font-size: 10px; color: var(--gold);
+      letter-spacing: .06em; margin-top: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001s !important; transition-duration: .001s !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Partículas douradas -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Anjinhos nos cantos -->
+  <svg class="cherub cherub-tl" viewBox="0 0 120 120" aria-hidden="true"><use href="#cherub-sym"/></svg>
+  <svg class="cherub cherub-tr" viewBox="0 0 120 120" aria-hidden="true"><use href="#cherub-sym"/></svg>
+
+  <!-- Sprite SVG anjinho -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="cherub-sym" viewBox="0 0 120 120">
+        <circle cx="60" cy="48" r="22" fill="none" stroke="#D4AF37" stroke-width=".6" opacity=".4"/>
+        <path d="M30 60 C 18 50,18 70,32 72 C 40 73,44 68,46 64 Z" fill="#E8D5A8" stroke="#C9A961" stroke-width=".8"/>
+        <path d="M90 60 C 102 50,102 70,88 72 C 80 73,76 68,74 64 Z" fill="#E8D5A8" stroke="#C9A961" stroke-width=".8"/>
+        <path d="M32 60 q4-3 8 0" fill="none" stroke="#C9A961" stroke-width=".6"/>
+        <path d="M32 64 q4-3 8 0" fill="none" stroke="#C9A961" stroke-width=".6"/>
+        <path d="M88 60 q-4-3-8 0" fill="none" stroke="#C9A961" stroke-width=".6"/>
+        <path d="M88 64 q-4-3-8 0" fill="none" stroke="#C9A961" stroke-width=".6"/>
+        <circle cx="60" cy="50" r="14" fill="#FAF0DC" stroke="#C9A961" stroke-width=".8"/>
+        <path d="M48 46 q6-10 24 0 q-6-4-12-3 q-6-1-12 3" fill="#D4AF37"/>
+        <circle cx="55" cy="51" r=".9" fill="#5C4A2A"/>
+        <circle cx="65" cy="51" r=".9" fill="#5C4A2A"/>
+        <circle cx="52" cy="55" r="1.5" fill="#F2C8B6" opacity=".7"/>
+        <circle cx="68" cy="55" r="1.5" fill="#F2C8B6" opacity=".7"/>
+        <path d="M56 58 q4 3 8 0" fill="none" stroke="#5C4A2A" stroke-width=".8" stroke-linecap="round"/>
+        <path d="M52 64 q8 6 16 0 l-3 8 q-5 3-10 0 z" fill="#FAF0DC" stroke="#C9A961" stroke-width=".8"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <main>
+
+    <!-- ════════════════ HERO ════════════════ -->
+    <section class="hero">
+      <div class="hero-rays"></div>
+      <div class="hero-rays-lines"></div>
+
+      <div class="hero-ornament">
+        <span class="hero-orn-line"></span>
+        <span class="hero-orn-sym">✦</span>
+        <span class="hero-orn-line"></span>
+      </div>
+
+      <p class="eyebrow hero-eyebrow">UMA GRAÇA PREPARADA &nbsp;·&nbsp; PARA VOCÊ</p>
+
+      <!-- Nossa Senhora sem fundo/moldura -->
+      <div class="hero-ns-wrap">
+        <div class="hero-ns-aura"></div>
+        <img class="hero-ns-img" src="assets/nossa-senhora.png" alt="Nossa Senhora" loading="eager" />
+      </div>
+
+      <h1 class="hero-headline"><span class="ital">Ela</span> te ouviu.</h1>
+
+      <p class="hero-sub">
+        Não foi por acaso que Nossa Senhora te conduziu até aqui.<br/>
+        Cada palavra que tu respondeste, Ela já guardava<br/>no Seu Imaculado Coração.
+      </p>
+
+      <div class="hero-cta-wrap">
+        <div class="cta-wrap">
+          <span class="cc cc-tl"></span><span class="cc cc-tr"></span>
+          <span class="cc cc-bl"></span><span class="cc cc-br"></span>
+          <a class="cta-btn" href="#checkout" id="ctaHero">
+            QUERO GARANTIR MEU DEVOCIONAL <span class="cta-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-div section-divider">
+        <span class="section-symbol">✦ &nbsp; ✦ &nbsp; ✦</span>
+      </div>
+    </section>
+
+    <!-- ════════════════ MENSAGEM + CAIXA DO DESEJO ════════════════ -->
+    <section class="message-section">
+      <div class="message-inner">
+
+        <div class="reveal">
+          <p class="bible-quote">"Eis aí tua Mãe."</p>
+          <span class="bible-ref">— JO 19, 27</span>
+        </div>
+
+        <div class="section-divider reveal"><span class="section-symbol">✦</span></div>
+
+        <p class="message-intro reveal">
+          Tu nos confiaste algo precioso. Um desejo guardado no fundo do teu coração,<br/>
+          que talvez nem todos saibam.
+        </p>
+
+        <!-- Caixa do desejo -->
+        <div class="desire-box reveal">
+          <div class="c-bl"></div>
+          <div class="c-br"></div>
+          <p class="desire-label">O DESEJO DO TEU CORAÇÃO</p>
+          <p class="desire-text" id="desireText">"que eu encontre paz e renovação espiritual"</p>
+        </div>
+
+        <p class="message-close reveal">
+          Saiba: <strong>Ela já o entregou aos pés do Filho.</strong><br/>
+          E agora, Maria Santíssima coloca em tuas mãos o caminho que Ela mesma percorreu.
+          Um caminho de oração, silêncio e entrega —<br/>
+          preparado para almas como a tua, que respondem <strong>sim</strong> ao chamado.
+        </p>
+
+        <div class="section-divider reveal"><span class="section-symbol">✦</span></div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ O DEVOCIONAL ════════════════ -->
+    <section class="features-section">
+      <div class="features-header reveal">
+        <p class="eyebrow">A GRAÇA QUE ELA PREPAROU</p>
+        <h2 class="sec-headline">Um <span class="ital">devocional</span> guiado pelas mãos dela</h2>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="f-card reveal">
+          <svg class="f-icon" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="28" cy="28" r="17"/>
+            <line x1="28" y1="11" x2="28" y2="7"/><line x1="28" y1="45" x2="28" y2="49"/>
+            <line x1="11" y1="28" x2="7" y2="28"/><line x1="45" y1="28" x2="49" y2="28"/>
+            <line x1="16" y1="16" x2="13" y2="13"/><line x1="40" y1="40" x2="43" y2="43"/>
+            <line x1="40" y1="16" x2="43" y2="13"/><line x1="16" y1="40" x2="13" y2="43"/>
+            <circle cx="28" cy="28" r="4"/>
+          </svg>
+          <h3 class="f-title">30 dias de oração</h3>
+          <p class="f-desc">Uma jornada diária pensada para que tu sintas a presença de Maria a cada amanhecer.</p>
+        </div>
+
+        <div class="f-card reveal" style="transition-delay:.08s">
+          <svg class="f-icon" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 14 C10 12 12 10 14 10 L28 10 L28 46 L14 46 C12 46 10 44 10 42Z"/>
+            <path d="M46 14 C46 12 44 10 42 10 L28 10 L28 46 L42 46 C44 46 46 44 46 42Z"/>
+            <line x1="28" y1="10" x2="28" y2="46"/>
+            <line x1="14" y1="20" x2="24" y2="20"/><line x1="14" y1="26" x2="24" y2="26"/><line x1="14" y1="32" x2="24" y2="32"/>
+            <line x1="32" y1="20" x2="42" y2="20"/><line x1="32" y1="26" x2="42" y2="26"/><line x1="32" y1="32" x2="42" y2="32"/>
+          </svg>
+          <h3 class="f-title">Reflexões diárias</h3>
+          <p class="f-desc">Meditações breves e profundas para conduzir teu coração ao essencial.</p>
+        </div>
+
+        <div class="f-card reveal" style="transition-delay:.16s">
+          <svg class="f-icon" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="28" cy="20" r="5"/>
+            <path d="M28 25 C22 30 15 34 14 42"/>
+            <path d="M28 25 C34 30 41 34 42 42"/>
+            <circle cx="14" cy="44" r="3"/><circle cx="42" cy="44" r="3"/>
+            <circle cx="16" cy="33" r="2.2"/><circle cx="20.5" cy="28.5" r="2.2"/>
+            <circle cx="35.5" cy="28.5" r="2.2"/><circle cx="40" cy="33" r="2.2"/>
+            <circle cx="28" cy="46" r="2.2"/>
+          </svg>
+          <h3 class="f-title">Terço comentado</h3>
+          <p class="f-desc">Aprenda a rezar o Rosário com o coração — mistério por mistério, conta por conta.</p>
+        </div>
+
+        <div class="f-card reveal" style="transition-delay:.24s">
+          <svg class="f-icon" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="28,8 31.5,19.5 44,19.5 34,26.5 37.5,38 28,31 18.5,38 22,26.5 12,19.5 24.5,19.5"/>
+          </svg>
+          <h3 class="f-title">Novenas poderosas</h3>
+          <p class="f-desc">As novenas mais amadas pela tradição, organizadas para o teu pedido especial.</p>
+        </div>
+
+        <div class="f-card reveal" style="transition-delay:.32s">
+          <svg class="f-icon" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M28 10 L44 20 L44 38 C44 44 36 50 28 52 C20 50 12 44 12 38 L12 20 Z"/>
+            <polyline points="20,30 25,36 37,24"/>
+          </svg>
+          <h3 class="f-title">Consagração mariana</h3>
+          <p class="f-desc">O passo a passo para te consagrares a Maria e viver sob o Seu manto protetor.</p>
+        </div>
+
+        <div class="f-card reveal" style="transition-delay:.40s">
+          <svg class="f-icon" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="12" y="10" width="32" height="36" rx="3"/>
+            <line x1="19" y1="16" x2="29" y2="16"/>
+            <line x1="19" y1="22" x2="37" y2="22"/>
+            <line x1="19" y1="28" x2="37" y2="28"/>
+            <line x1="19" y1="34" x2="31" y2="34"/>
+          </svg>
+          <h3 class="f-title">Diário espiritual</h3>
+          <p class="f-desc">Espaços para registrar tuas graças, súplicas e os frutos que Maria fará nascer.</p>
+        </div>
+
+      </div>
+
+      <div class="inline-cta-wrap reveal">
+        <div class="cta-wrap">
+          <span class="cc cc-tl"></span><span class="cc cc-tr"></span>
+          <span class="cc cc-bl"></span><span class="cc cc-br"></span>
+          <a class="cta-btn" href="#checkout" id="ctaFeatures">
+            QUERO GARANTIR MEU DEVOCIONAL AGORA <span class="cta-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ════════════════ DEPOIMENTOS ════════════════ -->
+    <section class="testimonials-section">
+      <div class="test-header reveal">
+        <p class="eyebrow">ALMAS TOCADAS</p>
+        <h2 class="sec-headline">Corações que disseram <span class="ital">sim</span></h2>
+      </div>
+      <div class="test-grid">
+        <div class="t-card reveal">
+          <p class="t-quote">"Eu tinha esquecido como era sentir a presença de Nossa Senhora todos os dias. Em uma semana, minha casa mudou."</p>
+          <span class="t-author">MARIA C. &mdash; MG</span>
+        </div>
+        <div class="t-card reveal" style="transition-delay:.1s">
+          <p class="t-quote">"As reflexões diárias me deram força para rezar de novo. Algo que eu havia perdido há anos."</p>
+          <span class="t-author">JOÃO P. &mdash; SP</span>
+        </div>
+        <div class="t-card reveal" style="transition-delay:.2s">
+          <p class="t-quote">"Comecei a novena pelo meu marido. No 9º dia, ele me pediu para rezarmos juntos. Não tenho palavras."</p>
+          <span class="t-author">LUCIANA F. &mdash; RJ</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ CTA FINAL ════════════════ -->
+    <section class="cta-section">
+      <h2 class="cta-headline reveal">Hoje, Ela te oferece <span class="ital">o caminho.</span></h2>
+      <p class="cta-sub reveal">
+        Recebe agora o devocional que Maria preparou para o teu coração<br/>
+        e para o teu desejo.
+      </p>
+
+      <div class="cta-wrap reveal">
+        <span class="cc cc-tl"></span>
+        <span class="cc cc-tr"></span>
+        <span class="cc cc-bl"></span>
+        <span class="cc cc-br"></span>
+        <!-- ⚠️ Substitua o href pelo link real do checkout (Hotmart / Kiwify / Stripe) -->
+        <a class="cta-btn" href="#checkout" id="ctaVenda">
+          QUERO RECEBER MEU DEVOCIONAL <span class="cta-arrow">→</span>
+        </a>
+      </div>
+
+      <p class="cta-note reveal">🤍 Esta graça está disponível para ti, hoje.</p>
+    </section>
+
+    <!-- ════════════════ FOOTER ════════════════ -->
+    <footer>
+      <p class="footer-text">✦ &nbsp; AVE MARIA, CHEIA DE GRAÇA &nbsp; ✦</p>
+    </footer>
+
+  </main>
+
+  <!-- Notificação social proof -->
+  <div class="toast" id="toast">
+    <div class="toast-icon">🙏</div>
+    <div class="toast-body">
+      <div class="toast-name" id="toastName"></div>
+      <div class="toast-msg" id="toastMsg"></div>
+      <div class="toast-time" id="toastTime"></div>
+    </div>
+  </div>
+
+  <script>
+    /* === DADOS DO QUIZ VIA URL === */
+    const p = new URLSearchParams(window.location.search);
+    const nome   = p.get('nome')   || '';
+    const desejo = p.get('desejo') || '';
+
+    /* Preenche a caixa do desejo */
+    if (desejo) {
+      document.getElementById('desireText').textContent = '“' + desejo + '”';
+    }
+
+    /* === PARTÍCULAS === */
+    const wrap = document.getElementById('particles');
+    for (let i = 0; i < 24; i++) {
+      const el = document.createElement('span');
+      el.className = 'particle';
+      const size = 3 + Math.random() * 5;
+      el.style.cssText = `
+        left:${Math.random()*100}vw;
+        width:${size}px; height:${size}px;
+        animation-duration:${12 + Math.random()*18}s;
+        animation-delay:${-Math.random()*22}s;
+      `;
+      wrap.appendChild(el);
+    }
+
+    /* === SCROLL REVEAL === */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* === NOTIFICAÇÃO SOCIAL PROOF === */
+    const _names  = ['Maria Silva','Ana Santos','Joana Oliveira','Beatriz Souza','Luiza Rodrigues','Fernanda Ferreira','Camila Alves','Juliana Pereira','Patrícia Lima','Sandra Gomes','Rosa Costa','Teresa Ribeiro','Lúcia Martins','Cristina Carvalho','Mariana Almeida','Adriana Lopes','Cláudia Vieira','Renata Barbosa','Simone Mendes','Eliane Rocha','Débora Nascimento','Vanessa Freitas','Andréia Cardoso','Fátima Pinto','Conceição Teixeira','Solange Moreira','Edilaine Correia','Rosângela Campos','Neuza Araújo','Célia Monteiro'];
+    const _cities = ['São Paulo, SP','Rio de Janeiro, RJ','Belo Horizonte, MG','Brasília, DF','Salvador, BA','Fortaleza, CE','Curitiba, PR','Recife, PE','Porto Alegre, RS','Goiânia, GO','Florianópolis, SC','Natal, RN','Maceió, AL','Campinas, SP','Santos, SP','Uberlândia, MG','Ribeirão Preto, SP','São Luís, MA','Teresina, PI','João Pessoa, PB','Vitória, ES','Manaus, AM','Belém, PA','Aracaju, SE','Campo Grande, MS','Londrina, PR','Joinville, SC','Juiz de Fora, MG','Sorocaba, SP','Macaé, RJ'];
+    const _times  = ['agora mesmo','há 1 minuto','há 2 minutos','há 3 minutos','há 4 minutos','há 5 minutos'];
+
+    const toastEl   = document.getElementById('toast');
+    const toastName = document.getElementById('toastName');
+    const toastMsg  = document.getElementById('toastMsg');
+    const toastTime = document.getElementById('toastTime');
+
+    function _rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    function showToast() {
+      toastName.textContent = _rand(_names);
+      toastMsg.textContent  = 'de ' + _rand(_cities) + ' acaba de garantir o Devocional Sagrado 🌹';
+      toastTime.textContent = _rand(_times);
+      toastEl.classList.add('show');
+      setTimeout(() => toastEl.classList.remove('show'), 4000);
+    }
+
+    setTimeout(() => { showToast(); setInterval(showToast, 6000); }, 3000);
+
+    /* === CTAs — vibração tátil === */
+    ['ctaVenda','ctaHero','ctaFeatures'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('click', () => {
+        if (navigator.vibrate) navigator.vibrate(40);
+      });
+    });
+  </script>
+</body>
+</html>

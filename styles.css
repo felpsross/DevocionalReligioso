@@ -1,0 +1,687 @@
+/* ===========================================================
+   DEVOCIONAL — Quiz Mariano
+   Paleta dourada / off-white, estilo barroco delicado
+   =========================================================== */
+
+:root{
+  --white:#FFFFFF;
+  --off-white:#FAF7F0;
+  --paper:#F4ECDC;
+  --gold:#D4AF37;
+  --gold-soft:#C9A961;
+  --gold-light:#E8D5A8;
+  --gold-glow:rgba(212,175,55,.45);
+  --ink:#5C4A2A;
+  --ink-soft:#8A7548;
+  --shadow:0 20px 60px rgba(92,74,42,.15);
+  --shadow-soft:0 6px 20px rgba(92,74,42,.10);
+  --radius:18px;
+  --easing:cubic-bezier(.25,.8,.25,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{
+  font-family:'Lato',system-ui,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(ellipse at top,#FFFDF7 0%,var(--off-white) 60%,#F1E8D2 100%);
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* Textura de papel envelhecido */
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(212,175,55,.05), transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(212,175,55,.06), transparent 45%);
+  z-index:0;
+}
+
+/* ============== ANJINHOS NOS CANTOS ================== */
+.cherub{
+  position:fixed;
+  width:90px;height:90px;
+  z-index:2;
+  pointer-events:none;
+  filter:drop-shadow(0 4px 8px rgba(92,74,42,.12));
+  animation:float 6s ease-in-out infinite;
+}
+.cherub-tl{top:12px;left:12px;}
+.cherub-tr{top:12px;right:12px;animation-delay:-1.5s;transform:scaleX(-1);}
+.cherub-bl{bottom:12px;left:12px;animation-delay:-3s;}
+.cherub-br{bottom:12px;right:12px;animation-delay:-4.5s;transform:scaleX(-1);}
+
+@keyframes float{
+  0%,100%{transform:translateY(0) rotate(0)}
+  50%{transform:translateY(-8px) rotate(.5deg)}
+}
+.cherub-tr,.cherub-br{animation-name:floatFlip}
+@keyframes floatFlip{
+  0%,100%{transform:translateY(0) scaleX(-1)}
+  50%{transform:translateY(-8px) scaleX(-1) rotate(-.5deg)}
+}
+
+@media (max-width:640px){
+  .cherub{width:58px;height:58px;}
+  .cherub-tl,.cherub-tr{top:6px;}
+  .cherub-bl,.cherub-br{bottom:6px;}
+}
+
+/* ============== PARTÍCULAS DOURADAS ================== */
+.sparkles{
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:1;
+  overflow:hidden;
+}
+.sparkle{
+  position:absolute;
+  width:6px;height:6px;border-radius:50%;
+  background:radial-gradient(circle,#FFE9A8 0%,rgba(212,175,55,.5) 60%,transparent 100%);
+  opacity:0;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  0%{transform:translateY(-20px) translateX(0);opacity:0;}
+  10%{opacity:.9;}
+  90%{opacity:.7;}
+  100%{transform:translateY(110vh) translateX(20px);opacity:0;}
+}
+
+/* ============== STAGE ================== */
+.stage{
+  position:relative;
+  z-index:5;
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:80px 18px 110px;
+}
+
+/* Barra de progresso fixa */
+.progress-wrap{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:20;
+  padding:14px 18px 10px;
+  background:linear-gradient(to bottom,rgba(255,253,247,.95),rgba(255,253,247,0));
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+.progress-bar{
+  height:4px;border-radius:4px;
+  background:rgba(212,175,55,.18);
+  overflow:hidden;
+  max-width:560px;margin:0 auto;
+}
+.progress-fill{
+  height:100%;width:0;
+  background:linear-gradient(90deg,var(--gold-soft),var(--gold),var(--gold-light));
+  border-radius:4px;
+  transition:width .6s var(--easing);
+  box-shadow:0 0 8px var(--gold-glow);
+}
+.progress-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;
+  text-align:center;
+  margin-top:6px;
+  color:var(--ink-soft);
+  letter-spacing:1px;
+}
+
+/* ============== CARD / SCREEN ================== */
+.screen{
+  display:none;
+  width:100%;
+  max-width:620px;
+  margin:0 auto;
+  opacity:0;
+  transform:translateY(14px);
+  transition:opacity .55s var(--easing), transform .55s var(--easing);
+}
+.screen.active{display:block;}
+.screen.in{opacity:1;transform:translateY(0);}
+
+.card{position:relative;}
+
+/* Moldura ornamentada */
+.frame{
+  position:relative;
+  background:
+    linear-gradient(180deg,#FFFDF7 0%,var(--off-white) 100%);
+  border:1px solid var(--gold-light);
+  border-radius:var(--radius);
+  padding:40px 32px 36px;
+  box-shadow:var(--shadow);
+  text-align:center;
+}
+.frame::before,.frame::after{
+  content:"";
+  position:absolute;
+  border:1px solid var(--gold-soft);
+  border-radius:calc(var(--radius) - 6px);
+  pointer-events:none;
+}
+.frame::before{
+  inset:6px;
+  opacity:.55;
+}
+.frame::after{
+  inset:10px;
+  border-color:var(--gold-light);
+  opacity:.4;
+}
+
+/* Cantos ornamentais (cantoneiras) */
+.frame > .corners,
+.frame{
+  background-clip:padding-box;
+}
+
+@media (max-width:640px){
+  .frame{padding:28px 16px 24px;}
+}
+
+/* ============== NOSSA SENHORA ================== */
+.virgin-wrap{
+  position:relative;
+  width:200px;height:260px;
+  margin:0 auto 22px;
+}
+.virgin-wrap.small{width:165px;height:215px;}
+.result-wrap{width:300px;height:240px;}
+.virgin-aura{
+  position:absolute;inset:-22px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,234,170,.7) 0%,rgba(212,175,55,.25) 40%,transparent 70%);
+  animation:auraPulse 3.5s ease-in-out infinite;
+  filter:blur(2px);
+}
+@keyframes auraPulse{
+  0%,100%{transform:scale(1);opacity:.85;}
+  50%{transform:scale(1.08);opacity:1;}
+}
+/* Foto real de Nossa Senhora */
+.virgin{
+  position:relative;
+  width:100%;height:100%;
+  object-fit:contain;
+  object-position:center bottom;
+  filter:drop-shadow(0 8px 24px rgba(212,175,55,.35));
+  display:block;
+}
+
+/* Foto Jesus + Nossa Senhora na tela de resultado */
+.result-virgin{
+  object-position:center center;
+  border-radius:12px;
+  filter:drop-shadow(0 10px 30px rgba(212,175,55,.45));
+}
+
+/* mini avatar para perguntas internas */
+.virgin-mini{
+  width:150px;height:195px;
+  margin:0 auto 16px;
+  display:block;
+  object-fit:contain;
+  object-position:center bottom;
+  filter:drop-shadow(0 6px 16px rgba(212,175,55,.35));
+}
+
+/* ============== TIPOGRAFIA ================== */
+.display{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:600;
+  font-size:clamp(28px,5vw,40px);
+  line-height:1.15;
+  color:var(--ink);
+  margin-bottom:14px;
+  letter-spacing:.2px;
+}
+.title{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:600;
+  font-size:clamp(22px,3.6vw,28px);
+  line-height:1.3;
+  color:var(--ink);
+  margin-bottom:18px;
+}
+.title em, .lead em{
+  font-family:'Great Vibes',cursive;
+  font-style:normal;
+  font-weight:400;
+  color:var(--gold);
+  font-size:1.25em;
+  line-height:1;
+}
+.lead{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(17px,2.4vw,20px);
+  line-height:1.55;
+  color:var(--ink);
+  margin-bottom:14px;
+}
+.body{
+  font-size:15px;
+  line-height:1.65;
+  color:var(--ink-soft);
+  margin-bottom:22px;
+}
+.cite{
+  margin-top:22px;
+  font-family:'Great Vibes',cursive;
+  font-size:22px;
+  color:var(--gold);
+  line-height:1.2;
+}
+.cite .ref{
+  display:block;
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;
+  color:var(--ink-soft);
+  margin-top:4px;
+  letter-spacing:1px;
+}
+.trust{
+  font-family:'Great Vibes',cursive;
+  font-size:22px;
+  color:var(--gold);
+  margin:8px 0 18px;
+}
+.hint{
+  font-size:12px;
+  color:var(--ink-soft);
+  opacity:.7;
+  margin-top:10px;
+}
+.divider{
+  color:var(--gold);
+  letter-spacing:8px;
+  margin:18px 0;
+  font-size:14px;
+}
+
+.lead-name{
+  color:var(--gold);
+  font-family:'Great Vibes',cursive;
+  font-size:1.35em;
+  font-weight:400;
+}
+.lead-wish, .lead-wish-quote{
+  font-family:'Great Vibes',cursive;
+  color:var(--gold);
+  font-size:1.2em;
+  font-style:normal;
+  font-weight:400;
+}
+
+/* ============== BOTÕES ================== */
+.btn{
+  display:inline-flex;
+  align-items:center;justify-content:center;gap:8px;
+  padding:14px 28px;
+  border:none;
+  border-radius:999px;
+  font-family:'Lato',sans-serif;
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:.5px;
+  cursor:pointer;
+  transition:transform .25s var(--easing), box-shadow .25s var(--easing), filter .25s;
+  text-decoration:none;
+  -webkit-user-select:none;user-select:none;
+}
+.btn-primary{
+  color:#FFF;
+  background:linear-gradient(135deg,#E2C46A 0%, var(--gold) 50%, #B89635 100%);
+  box-shadow:0 8px 22px rgba(212,175,55,.35), inset 0 1px 0 rgba(255,255,255,.4);
+  position:relative;
+  overflow:hidden;
+}
+.btn-primary::after{
+  /* brilho que passa */
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);
+  transform:translateX(-100%);
+  transition:transform .9s var(--easing);
+}
+.btn-primary:hover{transform:translateY(-2px);filter:brightness(1.05);}
+.btn-primary:hover::after{transform:translateX(100%);}
+.btn-primary:active{transform:translateY(0) scale(.98);}
+
+.btn .emoji{font-style:normal;}
+
+.btn-cta{
+  margin-top:14px;
+  font-size:17px;padding:18px 30px;
+  animation:pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 8px 22px rgba(212,175,55,.35), inset 0 1px 0 rgba(255,255,255,.4);}
+  50%{box-shadow:0 8px 30px rgba(212,175,55,.65), inset 0 1px 0 rgba(255,255,255,.4);}
+}
+
+/* ============== INPUTS ================== */
+.text-input{
+  width:100%;
+  padding:14px 16px;
+  border:1.5px solid var(--gold-light);
+  border-radius:12px;
+  background:var(--white);
+  font-family:'Lato',sans-serif;
+  font-size:16px;
+  color:var(--ink);
+  text-align:center;
+  margin:8px 0 18px;
+  outline:none;
+  transition:border-color .25s, box-shadow .25s;
+}
+.text-input:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 4px rgba(212,175,55,.15);
+}
+.text-area{text-align:left;resize:none;line-height:1.5;}
+
+/* ============== OPÇÕES ================== */
+.options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:8px;
+}
+.options.stack{grid-template-columns:1fr;}
+@media (max-width:520px){
+  .options{grid-template-columns:1fr;}
+}
+.option{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-align:left;
+  width:100%;
+  padding:14px 16px;
+  background:var(--white);
+  border:1.5px solid var(--gold-light);
+  border-radius:14px;
+  color:var(--ink);
+  font-family:'Lato',sans-serif;
+  font-size:14.5px;
+  line-height:1.4;
+  cursor:pointer;
+  transition:transform .2s var(--easing), border-color .2s, box-shadow .2s, background .2s;
+  position:relative;
+  overflow:hidden;
+}
+.option .opt-emoji{
+  font-size:20px;
+  flex-shrink:0;
+}
+.option:hover{
+  transform:translateY(-2px);
+  border-color:var(--gold);
+  box-shadow:0 6px 16px rgba(212,175,55,.18);
+  background:#FFFDF7;
+}
+.option:active{transform:translateY(0) scale(.98);}
+.option.selected{
+  border-color:var(--gold);
+  background:linear-gradient(135deg,#FFFCF0,#FFF5DA);
+  box-shadow:0 0 0 3px rgba(212,175,55,.25);
+}
+.option.big{
+  padding:18px 20px;
+  font-size:16px;
+  justify-content:center;
+  text-align:center;
+}
+
+/* ============== PLAYER WHATSAPP ================== */
+.wa-player{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:#FFFDF7;
+  border:1px solid var(--gold-light);
+  border-radius:18px;
+  padding:12px 14px;
+  margin:24px auto 6px;
+  max-width:440px;
+  box-shadow:var(--shadow-soft);
+}
+.wa-avatar{
+  width:48px;height:48px;border-radius:50%;
+  flex-shrink:0;
+  background-image:url('assets/jesus.png');
+  background-size:cover;
+  background-position:center top;
+  border:2px solid var(--gold);
+  box-shadow:0 0 12px var(--gold-glow);
+}
+.wa-play{
+  width:44px;height:44px;
+  border:none;border-radius:50%;
+  background:linear-gradient(135deg,#E2C46A,var(--gold));
+  color:#FFF;
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:transform .2s, filter .2s;
+  box-shadow:0 4px 10px rgba(212,175,55,.4);
+}
+.wa-play:hover{transform:scale(1.05);filter:brightness(1.05);}
+.wa-play:active{transform:scale(.96);}
+.wa-wave{
+  flex:1;
+  display:flex;align-items:center;
+  gap:2px;
+  height:36px;
+  cursor:pointer;
+}
+.wa-bar{
+  flex:1;
+  background:var(--gold-light);
+  border-radius:2px;
+  transition:background .25s, height .35s;
+  min-height:4px;
+}
+.wa-bar.played{background:var(--gold);}
+.wa-time{
+  font-family:'Lato',sans-serif;
+  font-size:12px;
+  color:var(--ink-soft);
+  min-width:32px;
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+}
+
+/* ============== TELA REVELAÇÃO ================== */
+.reveal-screen .frame{
+  background:transparent;
+  border:none;
+  box-shadow:none;
+  padding:80px 20px;
+}
+.reveal-screen .frame::before,
+.reveal-screen .frame::after{display:none;}
+.reveal-light{
+  position:fixed;
+  top:50%;left:50%;
+  width:10px;height:10px;
+  border-radius:50%;
+  background:radial-gradient(circle,#FFF 0%,#FFE9A8 30%,var(--gold) 60%,transparent 80%);
+  transform:translate(-50%,-50%) scale(0);
+  opacity:0;
+  pointer-events:none;
+  z-index:6;
+}
+.reveal-screen.in .reveal-light{
+  animation:revealLight 2.6s var(--easing) forwards;
+}
+@keyframes revealLight{
+  0%{transform:translate(-50%,-50%) scale(0);opacity:.9;}
+  60%{transform:translate(-50%,-50%) scale(80);opacity:.55;}
+  100%{transform:translate(-50%,-50%) scale(120);opacity:0;}
+}
+.whisper{
+  font-family:'Great Vibes',cursive;
+  font-size:42px;
+  color:var(--gold);
+  text-shadow:0 0 20px var(--gold-glow);
+  opacity:0;
+  animation:fadeInWhisper 2s ease 1s forwards;
+}
+@keyframes fadeInWhisper{
+  to{opacity:1;}
+}
+
+/* ============== RESULTADO / VENDA ================== */
+.devocional-card{
+  margin:28px 0 24px;
+  padding:24px 22px;
+  background:linear-gradient(180deg,#FFFCF0 0%,#FFF6E0 100%);
+  border:1px solid var(--gold);
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(212,175,55,.18);
+  text-align:left;
+}
+.devocional-title{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:600;
+  font-size:24px;
+  color:var(--ink);
+  margin-bottom:6px;
+  text-align:center;
+}
+.devocional-sub{
+  font-family:'Great Vibes',cursive;
+  font-size:22px;
+  color:var(--gold);
+  text-align:center;
+  margin-bottom:18px;
+}
+.devocional-list{
+  list-style:none;
+  display:flex;flex-direction:column;gap:10px;
+  font-size:14.5px;
+  line-height:1.5;
+  color:var(--ink);
+}
+.devocional-list li{
+  display:flex;gap:10px;align-items:flex-start;
+}
+.check{color:var(--gold);font-size:14px;line-height:1.5;}
+
+.testimonials{
+  display:grid;
+  gap:12px;
+  margin:18px 0 22px;
+}
+.testimonial{
+  background:#FFFDF7;
+  border-left:3px solid var(--gold);
+  border-radius:10px;
+  padding:14px 16px;
+  font-style:italic;
+  font-size:14px;
+  line-height:1.5;
+  color:var(--ink);
+  text-align:left;
+}
+.t-name{
+  display:block;
+  margin-top:6px;
+  font-style:normal;
+  font-size:12px;
+  color:var(--ink-soft);
+  letter-spacing:1px;
+}
+
+.urgency{
+  margin-top:14px;
+  font-size:13px;
+  color:var(--ink-soft);
+  letter-spacing:.5px;
+}
+
+/* ============== SOUND TOGGLE ================== */
+.sound-toggle{
+  position:fixed;
+  top:14px;right:50%;
+  transform:translateX(50%);
+  z-index:30;
+  width:34px;height:34px;
+  border-radius:50%;
+  background:rgba(255,253,247,.85);
+  border:1px solid var(--gold-light);
+  color:var(--ink-soft);
+  display:none;
+  align-items:center;justify-content:center;
+  cursor:pointer;
+  backdrop-filter:blur(4px);
+}
+.sound-toggle.muted{color:var(--ink-soft);opacity:.5;}
+
+/* ============== MOBILE FIRST (≤ 640px) ================== */
+@media (max-width:640px){
+  /* Stage: padding menor, alinha ao topo para scroll natural */
+  .stage{
+    padding:64px 10px 80px;
+    align-items:flex-start;
+    padding-bottom:max(80px, calc(env(safe-area-inset-bottom) + 60px));
+  }
+
+  /* Card principal ocupa toda a largura */
+  .screen{max-width:100%;}
+
+  /* Imagem principal (intro + q12 + resultado) */
+  .virgin-wrap{width:170px;height:220px;}
+  .virgin-wrap.small{width:145px;height:188px;}
+  .result-wrap{width:260px;height:208px;}
+
+  /* Avatar das perguntas */
+  .virgin-mini{width:130px;height:168px;margin-bottom:12px;}
+
+  /* Botões: largura total para toque fácil */
+  .btn{width:100%;font-size:16px;padding:16px 20px;}
+  .btn-cta{font-size:17px;padding:18px 20px;}
+
+  /* Opções: coluna única, alvos maiores */
+  .options{grid-template-columns:1fr;}
+  .option{padding:16px 14px;font-size:15px;min-height:56px;}
+  .option.big{padding:18px 16px;font-size:16px;}
+
+  /* Inputs: font-size 16px evita zoom no iOS */
+  .text-input{font-size:16px;padding:14px;}
+
+  /* Barra de progresso */
+  .progress-wrap{padding:10px 14px 6px;}
+
+  /* Card de venda */
+  .devocional-card{padding:18px 14px;margin:20px 0 18px;}
+  .devocional-list{font-size:14px;}
+
+  /* Depoimentos em coluna */
+  .testimonials{grid-template-columns:1fr;}
+
+  /* Player de áudio */
+  .wa-player{padding:10px 12px;gap:10px;}
+
+  /* Fontes de exibição */
+  .display{font-size:clamp(24px,7vw,36px);}
+  .title{font-size:clamp(19px,5vw,26px);}
+  .lead{font-size:clamp(16px,4.5vw,19px);}
+}
+
+/* Modo reduzido para usuários que preferem menos movimento */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001s!important;
+    transition-duration:.001s!important;
+  }
+}
