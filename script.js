@@ -203,20 +203,23 @@ document.querySelectorAll('.options').forEach(group => {
 });
 
 /* Enter avança nos campos de texto */
-document.getElementById('nameInput').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter'){
-    e.preventDefault();
-    document.querySelector('[data-action="submit-name"]').click();
-  }
-});
+const nameInputEl = document.getElementById('nameInput');
+if (nameInputEl) {
+  nameInputEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter'){
+      e.preventDefault();
+      document.querySelector('[data-action="submit-name"]').click();
+    }
+  });
+}
 
 /* ============== PLAYER ESTILO WHATSAPP ================== */
-const wave = document.getElementById('waWave');
-const audio = document.getElementById('waAudio');
+const wave    = document.getElementById('waWave');
+const audio   = document.getElementById('waAudio');
 const playBtn = document.getElementById('waPlay');
-const timeEl = document.getElementById('waTime');
-const iconPlay = playBtn.querySelector('.wa-icon-play');
-const iconPause = playBtn.querySelector('.wa-icon-pause');
+const timeEl  = document.getElementById('waTime');
+const iconPlay  = playBtn ? playBtn.querySelector('.wa-icon-play')  : null;
+const iconPause = playBtn ? playBtn.querySelector('.wa-icon-pause') : null;
 
 const BAR_COUNT = 38;
 const bars = [];
