@@ -1,5 +1,5 @@
 /* ===========================================================
-   DEVOCIONAL — Quiz Mariano
+   DEVOCIONAL — Quiz de Jesus
    Lógica: navegação, animações, áudio, personalização
    =========================================================== */
 
@@ -123,8 +123,8 @@ function updateProgress(){
 
 /* ============== PERSONALIZAÇÃO ================== */
 const stateLabels = {
-  vazio: 'sentem um vazio que precisa ser preenchido pelo amor d\'Ela',
-  paz: 'já vivem em paz, mas anseiam por uma intimidade ainda maior com Ela',
+  vazio: 'sentem um vazio que precisa ser preenchido pelo amor d\'Ele',
+  paz: 'já vivem em paz, mas anseiam por uma intimidade ainda maior com Jesus',
   ferido: 'precisam de cura no coração',
   chamas: 'desejam crescer ainda mais em fé e devoção',
 };
@@ -137,7 +137,7 @@ function refreshPersonalization(){
   });
   const stateEl = document.querySelector('.lead-state');
   if (stateEl){
-    stateEl.textContent = stateLabels[state.answers.estado] || 'buscam a presença de Nossa Senhora';
+    stateEl.textContent = stateLabels[state.answers.estado] || 'buscam a presença de Jesus';
   }
 }
 
